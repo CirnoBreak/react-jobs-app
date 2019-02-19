@@ -1,0 +1,10 @@
+{
+  "name": "react-jobs-app",
+  "version": "0.1.0",
+  "author": "CirnoBreak <1103054869@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "server": "npm run start:dev --prefix ./server",
+    "client": "npm run start --prefix ./client"
+  }
+}
