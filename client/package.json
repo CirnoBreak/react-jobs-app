@@ -9,6 +9,7 @@
     "@types/react": "16.8.3",
     "@types/react-dom": "16.8.2",
     "antd-mobile": "^2.2.9",
+    "history": "^4.7.2",
     "mobx": "^5.9.0",
     "mobx-react-lite": "^1.0.1",
     "react": "^16.8.2",

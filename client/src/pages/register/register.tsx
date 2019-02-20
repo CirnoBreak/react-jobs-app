@@ -1,47 +1,54 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import useRegStore from './store/regStore';
+import RegStore from '../../stores/regStore';
 import { observer } from 'mobx-react-lite';
-import { InputItem, List, WhiteSpace, Radio } from 'antd-mobile';
+import {
+  InputItem,
+  List,
+  WhiteSpace,
+  Radio,
+  Button
+} from 'antd-mobile';
 
-const Register = observer(() => {
+const Register = observer((props) => {
   const RadioItem = Radio.RadioItem;
-  const regStore = useRegStore();
 
   return (
     <List>
       <InputItem
-        onChange={(v) => (regStore.user = v)}
+        onChange={(v) => (RegStore.user = v)}
         >
         用户名
       </InputItem>
       <WhiteSpace />
       <InputItem
         type="password"
-        onChange={(v) => (regStore.pwd = v)}
+        onChange={(v) => (RegStore.pwd = v)}
         >
         密码
       </InputItem>
       <WhiteSpace />
       <InputItem
         type="password"
-        onChange={(v) => (regStore.repeatPwd = v)}>
+        onChange={(v) => (RegStore.repeatPwd = v)}>
         确认密码
       </InputItem>
       <WhiteSpace />
       <RadioItem
-        checked={regStore.type === 'genius'}
-        onChange={() => (regStore.type = 'genius')}
+        checked={RegStore.type === 'genius'}
+        onChange={() => (RegStore.type = 'genius')}
         >
         牛人
       </RadioItem><WhiteSpace />
       <WhiteSpace />
       <RadioItem
-        checked={regStore.type === 'boss'}
-        onChange={() => (regStore.type = 'boss')}
+        checked={RegStore.type === 'boss'}
+        onChange={() => (RegStore.type = 'boss')}
         >
         BOSS
       </RadioItem>
+      <WhiteSpace />
+      <Button type="primary" onClick={() => console.log(props)}></Button>
     </List>
   )
 })
