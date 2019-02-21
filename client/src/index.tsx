@@ -1,22 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Register from './pages/register/register';
-import Login from './pages/login/login';
-import {
-  BrowserRouter,
-  Route
-} from 'react-router-dom';
+import dva from 'dva';
+import createHistory from 'history/createBrowserHistory';
+import test from './models/test'
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <div>
-        <Route path="/login" component={Login}></Route>
-        <Route path="/register" component={Register}></Route>
-      </div>
-    </BrowserRouter>
-  )
-}
+const app = dva({
+  onError: () => {},
+  history: createHistory()
+});
 
-ReactDOM.render(<App />, document.getElementById('root'));
-;
+app.use(require('dva-immer').default());
+
+app.model(test);
+
+app.router(require('./router').default);
+
+app.start('#root');

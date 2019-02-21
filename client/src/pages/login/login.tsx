@@ -1,8 +1,5 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
-import LogStore from '../../stores/logStore';
+import React, { useReducer } from 'react';
 import { History } from 'history';
-
 import {
   WingBlank,
   List,
@@ -10,26 +7,47 @@ import {
   WhiteSpace,
   Button
 } from 'antd-mobile';
-import { withRouter } from 'react-router';
 
+const initState = {
+  user: '',
+  pwd: ''
+};
+
+interface stateInterface {
+  user: String;
+  pwd: String;
+}
+
+const reducer  = (state: stateInterface, action: any) => {
+  switch(action.type) {
+    case 'changeVal':
+      console.log(state)
+      return {
+        ...state,
+        [action.key]: action.val
+      }
+    default:
+      return state;
+  }
+}
 interface Props {
   history: History;
 }
 
-const Login = observer(({ history }: Props) => {
-
+const Login = ({ history }: Props) => {
+  const [state, dispatch] = useReducer(reducer, initState);
   return (
     <div>
       <WingBlank>
         <List>
           <InputItem
-            onChange={(v) => (LogStore.user = v)}
+            onChange={(v) => dispatch({ type: 'changeVal', key: 'user', val: v })}
           >
           用户
           </InputItem>
           <WhiteSpace />
           <InputItem
-            onChange={(v) => (LogStore.pwd = v)}
+            onChange={(v) => dispatch({ type: 'changeVal', key: 'pwd', val: v })}
           >
             密码
           </InputItem>
@@ -51,6 +69,6 @@ const Login = observer(({ history }: Props) => {
       </WingBlank>
     </div>
   )
-});
+};
 
-export default withRouter(Login);
+export default Login;
