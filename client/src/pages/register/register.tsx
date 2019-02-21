@@ -9,6 +9,8 @@ import {
 } from 'antd-mobile';
 import { connect } from 'dva';
 
+const CHANGE_VALUE = 'changeVal';
+
 const initState = {
   user: '',
   pwd: '',
@@ -25,72 +27,72 @@ interface stateInterface {
 
 interface Props {
   history: History;
-  count: number;
-  dispatch: any;
+  dispatch: Function;
 }
 
-const reducer = (state: stateInterface, action: any) => {
+const reducer = (state: stateInterface, action) => {
   switch(action.type) {
     case 'changeVal':
-      console.log(state)
       return {
         ...state,
         [action.key]: action.val
       }
+    case 'validateForm':
+      return state;
     default:
       return state;
   }
 }
 
-const Register = (props: any) => {
+const Register = ({ history, dispatch }: Props) => {
   const RadioItem = Radio.RadioItem;
-  const [state, dispatch1] = useReducer(reducer, initState);
-
+  const [state, locDispatch] = useReducer(reducer, initState);
+  const { user, pwd, repeatPwd, type } = state;
   return (
     <List>
       <InputItem
-        onChange={(val) => dispatch1({ type: 'changeVal', key: 'user', val })}
+        onChange={(val) => locDispatch({ type: CHANGE_VALUE, key: 'user', val })}
         >
-        {props.count}用户名
+        用户名
       </InputItem>
       <WhiteSpace />
       <InputItem
         type="password"
-        onChange={(val) => dispatch1({ type: 'changeVal', key: 'pwd', val})}
+        onChange={(val) => locDispatch({ type: CHANGE_VALUE, key: 'pwd', val})}
         >
         密码
       </InputItem>
       <WhiteSpace />
       <InputItem
         type="password"
-        onChange={(val) => dispatch1({ type: 'changeVal', key: 'repeatPwd', val})}>
+        onChange={(val) => locDispatch({ type: CHANGE_VALUE, key: 'repeatPwd', val})}>
         确认密码
       </InputItem>
       <WhiteSpace />
       <RadioItem
-        checked={state.type === 'genius'}
-        onChange={() => dispatch1({ type: 'changeVal', key: 'type', val: 'genius' })}
+        checked={type === 'genius'}
+        onChange={() => locDispatch({ type: CHANGE_VALUE, key: 'type', val: 'genius' })}
         >
         牛人
       </RadioItem><WhiteSpace />
       <WhiteSpace />
       <RadioItem
-        checked={state.type === 'boss'}
-        onChange={() => dispatch1({ type: 'changeVal', key: 'type', val: 'boss' })}
+        checked={type === 'boss'}
+        onChange={() => locDispatch({ type: CHANGE_VALUE, key: 'type', val: 'boss' })}
         >
         BOSS
       </RadioItem>
       <WhiteSpace />
-      <Button type="primary" onClick={() => console.log(props)}></Button>
-      <Button type="primary" onClick={() => props.dispatch({ type: 'count/add' })}></Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          dispatch({ type: 'user/handleRegister', payload: { user, pwd, repeatPwd, type }})
+        }}>
+        注册
+      </Button>
     </List>
   )
 }
 
-const mapStateToProps = ({ count }: {count: any}) => {
-  return {
-    count: count.count.test.gg.ok
-  }
-}
 
-export default connect(mapStateToProps)(Register);
+export default connect(null)(Register);

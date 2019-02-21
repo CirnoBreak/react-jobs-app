@@ -7,21 +7,23 @@ import {
   WhiteSpace,
   Button
 } from 'antd-mobile';
+import { connect } from 'dva'
 
 const initState = {
   user: '',
   pwd: ''
 };
 
+const CHANGE_VALUE = 'changeVal';
+
 interface stateInterface {
   user: String;
   pwd: String;
 }
 
-const reducer  = (state: stateInterface, action: any) => {
+const reducer  = (state: stateInterface, action) => {
   switch(action.type) {
     case 'changeVal':
-      console.log(state)
       return {
         ...state,
         [action.key]: action.val
@@ -32,29 +34,31 @@ const reducer  = (state: stateInterface, action: any) => {
 }
 interface Props {
   history: History;
+  dispatch: Function;
 }
 
-const Login = ({ history }: Props) => {
-  const [state, dispatch] = useReducer(reducer, initState);
+const Login = ({ history, dispatch }: Props) => {
+  const [state, locDispatch] = useReducer(reducer, initState);
+  const { user, pwd } = state;
   return (
     <div>
       <WingBlank>
         <List>
           <InputItem
-            onChange={(v) => dispatch({ type: 'changeVal', key: 'user', val: v })}
+            onChange={(v) => locDispatch({ type: CHANGE_VALUE, key: 'user', val: v })}
           >
           用户
           </InputItem>
           <WhiteSpace />
           <InputItem
-            onChange={(v) => dispatch({ type: 'changeVal', key: 'pwd', val: v })}
+            onChange={(v) => locDispatch({ type: CHANGE_VALUE, key: 'pwd', val: v })}
           >
             密码
           </InputItem>
         </List>
         <WhiteSpace />
         <Button
-          onClick={() => {}}
+          onClick={() => dispatch({ type: 'user/handleLogin', payload: { user, pwd } })}
           type="primary"
         >
           登录
@@ -71,4 +75,4 @@ const Login = ({ history }: Props) => {
   )
 };
 
-export default Login;
+export default connect(null)(Login);
