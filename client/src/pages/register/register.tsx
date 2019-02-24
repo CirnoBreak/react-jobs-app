@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { History } from 'history';
 import {
   InputItem,
@@ -46,39 +46,42 @@ const reducer = (state: stateInterface, action) => {
 
 const Register = ({ history, dispatch }: Props) => {
   const RadioItem = Radio.RadioItem;
-  const [state, locDispatch] = useReducer(reducer, initState);
-  const { user, pwd, repeatPwd, type } = state;
+  const [user, setUser] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [repeatPwd, setRepeatPwd] = useState('');
+  const [type, setType] = useState('genius');
+
   return (
     <List>
       <InputItem
-        onChange={(val) => locDispatch({ type: CHANGE_VALUE, key: 'user', val })}
+        onChange={(val) => setUser(val)}
         >
         用户名
       </InputItem>
       <WhiteSpace />
       <InputItem
         type="password"
-        onChange={(val) => locDispatch({ type: CHANGE_VALUE, key: 'pwd', val})}
+        onChange={(val) => setPwd(val)}
         >
         密码
       </InputItem>
       <WhiteSpace />
       <InputItem
         type="password"
-        onChange={(val) => locDispatch({ type: CHANGE_VALUE, key: 'repeatPwd', val})}>
+        onChange={(val) => setRepeatPwd(val)}>
         确认密码
       </InputItem>
       <WhiteSpace />
       <RadioItem
         checked={type === 'genius'}
-        onChange={() => locDispatch({ type: CHANGE_VALUE, key: 'type', val: 'genius' })}
+        onChange={() => setType('genius')}
         >
         牛人
       </RadioItem><WhiteSpace />
       <WhiteSpace />
       <RadioItem
         checked={type === 'boss'}
-        onChange={() => locDispatch({ type: CHANGE_VALUE, key: 'type', val: 'boss' })}
+        onChange={() => setType('boss')}
         >
         BOSS
       </RadioItem>

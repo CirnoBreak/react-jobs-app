@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { History } from 'history';
 import {
   WingBlank,
@@ -9,49 +9,28 @@ import {
 } from 'antd-mobile';
 import { connect } from 'dva'
 
-const initState = {
-  user: '',
-  pwd: ''
-};
-
 const CHANGE_VALUE = 'changeVal';
-
-interface stateInterface {
-  user: String;
-  pwd: String;
-}
-
-const reducer  = (state: stateInterface, action) => {
-  switch(action.type) {
-    case 'changeVal':
-      return {
-        ...state,
-        [action.key]: action.val
-      }
-    default:
-      return state;
-  }
-}
 interface Props {
   history: History;
   dispatch: Function;
 }
 
 const Login = ({ history, dispatch }: Props) => {
-  const [state, locDispatch] = useReducer(reducer, initState);
-  const { user, pwd } = state;
+  const [user, setUser] = useState('');
+  const [pwd, setPwd] = useState('');
+  
   return (
     <div>
       <WingBlank>
         <List>
           <InputItem
-            onChange={(v) => locDispatch({ type: CHANGE_VALUE, key: 'user', val: v })}
+            onChange={(val) => setUser(val)}
           >
           用户
           </InputItem>
           <WhiteSpace />
           <InputItem
-            onChange={(v) => locDispatch({ type: CHANGE_VALUE, key: 'pwd', val: v })}
+            onChange={(val) => setPwd(val)}
           >
             密码
           </InputItem>

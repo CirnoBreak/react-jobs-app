@@ -16,6 +16,7 @@ export class UsersController {
   @Post('/login')
   async login (@Body() createUserDto: CreateUserDto, @Response() response) {
     const { user, pwd } = createUserDto;
+    const token = await this.usersService.generateJWT(createUserDto);
     this.usersService.findOne({ user, pwd }, filter)
       .then((res) => {
         if (!res) {
@@ -23,10 +24,9 @@ export class UsersController {
             .status(HttpStatus.BAD_GATEWAY)
             .json({ msg: '用户或者密码错误' })
         }
-        console.log(res)
         return response
           .status(HttpStatus.OK)
-          .json({ msg: '登陆成功', status: HttpStatus.OK })
+          .json({ msg: '登陆成功', token, status: HttpStatus.OK })
       })
       .catch((err) => {
         if (err) {
