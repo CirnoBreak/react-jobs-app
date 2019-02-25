@@ -30,7 +30,6 @@ export class UsersService {
 
     return jwt.sign({
       user: user.user,
-      type: user.type,
       exp: exp.getTime() / 1000
     }, SECRET)
   }

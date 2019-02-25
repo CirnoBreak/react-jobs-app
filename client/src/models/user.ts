@@ -38,6 +38,9 @@ export default {
       if (user && pwd) {
         const data = yield call(userService.login, { user, pwd });
         console.log(data);
+        if (data && data.data.status === 200) {
+          localStorage.setItem('token', data.data.token)
+        }
       }
     },
     *handleRegister ({ payload: { user, pwd, repeatPwd, type } }, { call, put }) {

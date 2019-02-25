@@ -30,6 +30,7 @@ const Login = ({ history, dispatch }: Props) => {
           </InputItem>
           <WhiteSpace />
           <InputItem
+            type="password"
             onChange={(val) => setPwd(val)}
           >
             密码
@@ -37,7 +38,9 @@ const Login = ({ history, dispatch }: Props) => {
         </List>
         <WhiteSpace />
         <Button
-          onClick={() => dispatch({ type: 'user/handleLogin', payload: { user, pwd } })}
+          onClick={() => {
+            dispatch({ type: 'user/handleLogin', payload: { user, pwd } })
+          }}
           type="primary"
         >
           登录
