@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import { History } from 'history';
 import {
   WingBlank,
@@ -7,29 +7,43 @@ import {
   WhiteSpace,
   Button
 } from 'antd-mobile';
-import { connect } from 'dva'
+import { connect } from 'dva';
+import { Redirect } from 'dva/router';
 
-const CHANGE_VALUE = 'changeVal';
 interface Props {
   history: History;
   dispatch: Function;
+  redirectTo: string;
 }
 
-const Login = ({ history, dispatch }: Props) => {
+/**
+ * 登录组件
+ * @param Object history history路由相关的
+ * @param Function dispatch dva的dispatch方法 
+ */
+const Login = ({ history, dispatch, redirectTo }: Props) => {
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
+  // 登录提交
+  const submitLogin = () => {
+    dispatch({ type: 'user/handleLogin', payload: { user, pwd } })
+    setPwd('')
+    console.log(redirectTo)
+  }
   
   return (
     <div>
+      {redirectTo ? <Redirect to={redirectTo} /> : null}
       <WingBlank>
         <List>
           <InputItem
             onChange={(val) => setUser(val)}
-          >
-          用户
+            >
+          用户名
           </InputItem>
           <WhiteSpace />
           <InputItem
+            value={pwd}
             type="password"
             onChange={(val) => setPwd(val)}
           >
@@ -38,9 +52,9 @@ const Login = ({ history, dispatch }: Props) => {
         </List>
         <WhiteSpace />
         <Button
-          onClick={() => {
-            dispatch({ type: 'user/handleLogin', payload: { user, pwd } })
-          }}
+          onClick={() => 
+            submitLogin()
+          }
           type="primary"
         >
           登录
@@ -57,4 +71,11 @@ const Login = ({ history, dispatch }: Props) => {
   )
 };
 
-export default connect(null)(Login);
+const mapStateToProps = (state) => {
+  console.log(state.user)
+  return {
+    redirectTo: state.user.redirectTo
+  }
+}
+
+export default connect(mapStateToProps)(Login);

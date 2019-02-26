@@ -19,11 +19,13 @@ export class UsersController {
   async getInfo (@User('user') user: string, @Response() response) {
     if (!user) {
       return response
-        .status(HttpStatus.UNAUTHORIZED)
+        .json({ msg: '没有权限', status: HttpStatus.UNAUTHORIZED });
     }
     const info = await this.usersService.findOne({ user }, filter);
     if (info) {
-      return response.status(HttpStatus.OK).json({ data: user })
+      console.log(info)
+      return response
+        .json({ data: info, status: HttpStatus.OK })
     }
   }
 
@@ -39,8 +41,7 @@ export class UsersController {
         .json({ msg: '用户或者密码错误' })
     }
     return response
-        .status(HttpStatus.OK)
-        .json({ msg: '登陆成功', token, status: HttpStatus.OK })
+        .json({ msg: '登陆成功', token, data: res, status: HttpStatus.OK })
   }
 
   // 注册
@@ -50,7 +51,6 @@ export class UsersController {
     const res = await this.usersService.findOne({ user })
     if (res) {
       return response
-        .status(HttpStatus.BAD_GATEWAY)
         .json({ msg: '用户名重复' })
     }
     return this.usersService.create(createUserDto)

@@ -1,12 +1,5 @@
 import * as userService from '../services/user';
-
-const getRedirectPath = ({ type, avatar }) => {
-  let url = (type === 'boss') ? '/boss' : '/genius';
-  if (!avatar) {
-    url += 'info';
-  }
-  return url;
-}
+import { getRedirectPath } from '../lib/utils';
 
 export default {
   namespace: 'user',
@@ -20,15 +13,24 @@ export default {
   reducers: {
     REGISTER_SUCCESS (state, { payload }) {
       state.msg = '';
-
     },
     SET_ERR_MSG (state, { payload: { msg } }) {
       state.msg = msg;
+    },
+    SET_USER_INFO (state, { payload }) {
+      Object.entries(payload).map(([key, val]) => {
+        state[key] = val;
+      })
+    },
+    AUTH_SUCCESS (state, { payload }) {
+      state.msg = '';
+      state.redirectTo = getRedirectPath(payload);
     }
   },
   effects: {
     *handleLogin ({ payload: { user, pwd } }, { call, put }) {
       let msg: string = '';
+      
       if (!user || !pwd) {
         msg = '用户名或者密码不能为空';
       }
@@ -37,15 +39,14 @@ export default {
 
       if (user && pwd) {
         const data = yield call(userService.login, { user, pwd });
-        console.log(data);
         if (data && data.data.status === 200) {
           localStorage.setItem('token', data.data.token)
+          yield put({ type: 'AUTH_SUCCESS', payload: { type: data.data.data.type } })
         }
       }
     },
     *handleRegister ({ payload: { user, pwd, repeatPwd, type } }, { call, put }) {
       let msg: string = '';
-
       if (!user || !pwd) {
         msg = '用户名和密码不能为空';
       }

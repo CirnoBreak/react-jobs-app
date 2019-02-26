@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { History } from 'history';
 import {
   InputItem,
@@ -9,41 +9,15 @@ import {
 } from 'antd-mobile';
 import { connect } from 'dva';
 
-const CHANGE_VALUE = 'changeVal';
-
-const initState = {
-  user: '',
-  pwd: '',
-  repeatPwd: '',
-  type: 'genius'
-};
-
-interface stateInterface {
-  user: String;
-  pwd: String;
-  repeatPwd: String;
-  type: String;
-}
-
 interface Props {
   history: History;
   dispatch: Function;
 }
 
-const reducer = (state: stateInterface, action) => {
-  switch(action.type) {
-    case 'changeVal':
-      return {
-        ...state,
-        [action.key]: action.val
-      }
-    case 'validateForm':
-      return state;
-    default:
-      return state;
-  }
-}
-
+/**
+ * 注册组件
+ * @param param0 
+ */
 const Register = ({ history, dispatch }: Props) => {
   const RadioItem = Radio.RadioItem;
   const [user, setUser] = useState('');
@@ -61,6 +35,7 @@ const Register = ({ history, dispatch }: Props) => {
       <WhiteSpace />
       <InputItem
         type="password"
+        value={pwd}
         onChange={(val) => setPwd(val)}
         >
         密码
@@ -68,6 +43,7 @@ const Register = ({ history, dispatch }: Props) => {
       <WhiteSpace />
       <InputItem
         type="password"
+        value={repeatPwd}
         onChange={(val) => setRepeatPwd(val)}>
         确认密码
       </InputItem>
@@ -90,6 +66,8 @@ const Register = ({ history, dispatch }: Props) => {
         type="primary"
         onClick={() => {
           dispatch({ type: 'user/handleRegister', payload: { user, pwd, repeatPwd, type }})
+          setPwd('')
+          setRepeatPwd('')
         }}>
         注册
       </Button>
