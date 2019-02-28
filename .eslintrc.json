@@ -1,0 +1,15 @@
+{
+"extends": [
+        "eslint-config-alloy/typescript-react"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1,
+                "flatTernaryExpressions": true
+            }
+        ]
+    }
+}

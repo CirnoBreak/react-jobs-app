@@ -1,12 +1,12 @@
 import * as userService from '../services/user';
 import { getRedirectPath } from '../lib/utils';
+import { Toast } from 'antd-mobile';
 
 export default {
   namespace: 'user',
   state: {
     redirectTo: '',
     isLogin: false,
-    msg: '',
     user: '',
     type: ''
   },
@@ -14,16 +14,12 @@ export default {
     REGISTER_SUCCESS (state, { payload }) {
       state.msg = '';
     },
-    SET_ERR_MSG (state, { payload: { msg } }) {
-      state.msg = msg;
-    },
     SET_USER_INFO (state, { payload }) {
       Object.entries(payload).map(([key, val]) => {
         state[key] = val;
       })
     },
     AUTH_SUCCESS (state, { payload }) {
-      state.msg = '';
       state.redirectTo = getRedirectPath(payload);
     }
   },
@@ -33,9 +29,8 @@ export default {
       
       if (!user || !pwd) {
         msg = '用户名或者密码不能为空';
+        Toast.fail(msg, 1);
       }
-
-      yield put({ type: 'SET_ERR_MSG', payload: { msg } })
 
       if (user && pwd) {
         const data = yield call(userService.login, { user, pwd });
@@ -49,13 +44,13 @@ export default {
       let msg: string = '';
       if (!user || !pwd) {
         msg = '用户名和密码不能为空';
+        Toast.fail(msg, 1);
       }
 
       if (pwd && (pwd !== repeatPwd)) {
         msg = '两次密码输入不一致';
+        Toast.fail(msg, 1);
       }
-
-      yield put({ type: 'SET_ERR_MSG', payload: { msg } })
 
       if ((pwd === repeatPwd) && user && pwd && repeatPwd && type) {
         const data = yield call(userService.register, { user, pwd, repeatPwd, type})

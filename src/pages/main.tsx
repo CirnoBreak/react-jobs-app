@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
-import { info } from '../../services/user'
+import { info } from '../services/user'
 
 /**
  * 权限路由组件
