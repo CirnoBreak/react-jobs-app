@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
-import { info } from '../services/user'
+import { info } from '../services/user';
 
 /**
  * 权限路由组件
- * 
+ *
  */
 const AuthRoute = ({ location, history, dispatch }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -14,18 +14,18 @@ const AuthRoute = ({ location, history, dispatch }) => {
   const redirectPath = publicList.indexOf(pathname) > -1 ? pathname : '/login';
   const routerOperation = () => {
     return info()
-        .then(res => {
-          if (res.data.status === 200) {
-            dispatch({ type: 'user/SET_USER_INFO', payload: res.data.data })
-          } else {
-            history.push(redirectPath);
-          }
-        })
-        .catch((err) => {
+      .then(res => {
+        if (res.data.status === 200) {
+          dispatch({ type: 'user/SET_USER_INFO', payload: res.data.data });
+        } else {
           history.push(redirectPath);
-        })
-  }
-  
+        }
+      })
+      .catch(() => {
+        history.push(redirectPath);
+      });
+  };
+
   useEffect(() => {
     if (!isMounted) {
       routerOperation();
@@ -34,6 +34,6 @@ const AuthRoute = ({ location, history, dispatch }) => {
   }, [isMounted]);
 
   return null;
-}
+};
 
-export default withRouter(connect(null)(AuthRoute))
+export default withRouter(connect(null)(AuthRoute));

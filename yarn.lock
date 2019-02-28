@@ -2940,10 +2940,10 @@ csstype@^2.2.0:
   resolved "http://registry.npm.taobao.org/csstype/download/csstype-2.6.2.tgz#3043d5e065454579afc7478a18de41909c8a2f01"
   integrity sha1-MEPV4GVFRXmvx0eKGN5BkJyKLwE=
 
-customize-cra@^0.2.11:
-  version "0.2.11"
-  resolved "http://registry.npm.taobao.org/customize-cra/download/customize-cra-0.2.11.tgz#eda1cad4e16c958c577fa43c9776ea372e82671d"
-  integrity sha1-7aHK1OFslYxXf6Q8l3bqNy6CZx0=
+customize-cra@^0.2.12:
+  version "0.2.12"
+  resolved "http://registry.npm.taobao.org/customize-cra/download/customize-cra-0.2.12.tgz#ffc9b6378cbdffbe29ad02c479ae5d7a502aca69"
+  integrity sha1-/8m2N4y9/74prQLEea5delAqymk=
   dependencies:
     lodash.flow "^3.5.0"
 
@@ -3576,23 +3576,10 @@ eslint-plugin-jsx-a11y@6.1.2:
     has "^1.0.3"
     jsx-ast-utils "^2.0.1"
 
-eslint-plugin-react@7.12.4:
+eslint-plugin-react@7.12.4, eslint-plugin-react@^7.12.4:
   version "7.12.4"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.12.4.tgz#b1ecf26479d61aee650da612e425c53a99f48c8c"
   integrity sha512-1puHJkXJY+oS1t467MjbqjvX53uQ05HXwjqDgdbGBqf5j9eeydI54G3KwiJmWciQ0HTBacIKw2jgwSBSH3yfgQ==
-  dependencies:
-    array-includes "^3.0.3"
-    doctrine "^2.1.0"
-    has "^1.0.3"
-    jsx-ast-utils "^2.0.1"
-    object.fromentries "^2.0.0"
-    prop-types "^15.6.2"
-    resolve "^1.9.0"
-
-eslint-plugin-react@^7.12.4:
-  version "7.12.4"
-  resolved "http://registry.npm.taobao.org/eslint-plugin-react/download/eslint-plugin-react-7.12.4.tgz#b1ecf26479d61aee650da612e425c53a99f48c8c"
-  integrity sha1-sezyZHnWGu5lDaYS5CXFOpn0jIw=
   dependencies:
     array-includes "^3.0.3"
     doctrine "^2.1.0"

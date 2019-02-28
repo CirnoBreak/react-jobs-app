@@ -13,8 +13,8 @@ instance.interceptors.request.use(
     return config;
   },
   error => {
-    console.log(error)
+    console.log(error);
   }
-)
+);
 
-export default instance
+export default instance;

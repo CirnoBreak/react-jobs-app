@@ -5,7 +5,7 @@ import {
   List,
   InputItem,
   WhiteSpace,
-  Button
+  Button,
 } from 'antd-mobile';
 import { connect } from 'dva';
 import { Redirect } from 'dva/router';
@@ -19,18 +19,17 @@ interface Props {
 /**
  * 登录组件
  * @param Object history history路由相关的
- * @param Function dispatch dva的dispatch方法 
+ * @param Function dispatch dva的dispatch方法
  */
 const Login = ({ history, dispatch, redirectTo }: Props) => {
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   // 登录提交
   const submitLogin = () => {
-    dispatch({ type: 'user/handleLogin', payload: { user, pwd } })
-    setPwd('')
-    console.log(redirectTo)
-  }
-  
+    dispatch({ type: 'user/handleLogin', payload: { user, pwd } });
+    setPwd('');
+    console.log(redirectTo);
+  };
   return (
     <div>
       {redirectTo ? <Redirect to={redirectTo} /> : null}
@@ -38,7 +37,7 @@ const Login = ({ history, dispatch, redirectTo }: Props) => {
         <List>
           <InputItem
             onChange={(val) => setUser(val)}
-            >
+          >
           用户名
           </InputItem>
           <WhiteSpace />
@@ -52,7 +51,7 @@ const Login = ({ history, dispatch, redirectTo }: Props) => {
         </List>
         <WhiteSpace />
         <Button
-          onClick={() => 
+          onClick={() =>
             submitLogin()
           }
           type="primary"
@@ -68,14 +67,14 @@ const Login = ({ history, dispatch, redirectTo }: Props) => {
         </Button>
       </WingBlank>
     </div>
-  )
+  );
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.user)
+  console.log(state.user);
   return {
     redirectTo: state.user.redirectTo
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Login);

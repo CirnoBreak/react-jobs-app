@@ -1,8 +1,7 @@
 import React from 'react';
 import {
   Route,
-  routerRedux,
-  Switch
+  routerRedux
 } from 'dva/router';
 import { History } from 'history';
 import Register from './pages/register';
@@ -20,7 +19,7 @@ const RouterConfig = ({ history }: { history: History }) => {
         <Route path="/login" component={Login}></Route>
       </>
     </ConnectedRouter>
-  )
-}
+  );
+};
 
 export default RouterConfig;

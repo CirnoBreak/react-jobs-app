@@ -3,7 +3,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { User } from './users.decorator';
-import { response } from 'express';
 
 // 查询的时候过滤密码跟__v字段
 const filter = {
