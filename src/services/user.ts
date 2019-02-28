@@ -15,5 +15,5 @@ export function login (payload): Promise<any> {
 // 获取用户信息
 export function info (): Promise<any> {
   return axios.get('/users/info')
-    .catch(() => {});
+    .catch((err) => { console.log('errrr', err) });
 }

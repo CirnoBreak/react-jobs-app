@@ -1,12 +1,13 @@
 import React from 'react';
 import {
   Route,
-  routerRedux
+  routerRedux,
+  Switch
 } from 'dva/router';
 import { History } from 'history';
 import Register from './pages/register';
 import Login from './pages/login';
-import Auth from './pages/main';
+import Auth from './pages/auth';
 
 const { ConnectedRouter } = routerRedux;
 
@@ -15,8 +16,10 @@ const RouterConfig = ({ history }: { history: History }) => {
     <ConnectedRouter history={history}>
       <>
         <Auth />
-        <Route path="/register" component={Register}></Route>
-        <Route path="/login" component={Login}></Route>
+        <Switch>
+          <Route path="/register" component={Register}></Route>
+          <Route path="/login" component={Login}></Route>
+        </Switch>
       </>
     </ConnectedRouter>
   );

@@ -1,5 +1,5 @@
 const getRedirectPath = ({ type, avatar }): String => {
-  let url = (type === 'boss') ? '/boss' : '/genius';
+  let url: String = (type === 'applicant') ? '/applicant' : '/recruiter';
   if (!avatar) {
     url += 'info';
   }
