@@ -23,6 +23,7 @@
     "client": "npm run start",
     "server": "npm run start:dev --prefix ./server",
     "build": "react-app-rewired build",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "fix": "eslint --fix ./src/**/*.tsx"
@@ -35,6 +36,7 @@
   ],
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
+    "concurrently": "^4.1.0",
     "customize-cra": "^0.2.12",
     "eslint-config-alloy": "^1.4.2",
     "eslint-plugin-react": "^7.12.4",

@@ -5,9 +5,11 @@ import {
   Switch
 } from 'dva/router';
 import { History } from 'history';
-import Register from './pages/register';
-import Login from './pages/login';
-import Auth from './pages/auth';
+import Register from './pages/Register/register';
+import Login from './pages/Login/Login';
+import Authorized from './pages/Authorized';
+import ApplicantInfo from './pages/ApplicantInfo/ApplicantInfo';
+import RecruiterInfo from './pages/RecruiterInfo/RecruiterInfo';
 
 const { ConnectedRouter } = routerRedux;
 
@@ -15,8 +17,10 @@ const RouterConfig = ({ history }: { history: History }) => {
   return (
     <ConnectedRouter history={history}>
       <>
-        <Auth />
+        <Authorized />
         <Switch>
+          <Route path="/recruiterinfo" component={RecruiterInfo}></Route>
+          <Route path="/applicantinfo" component={ApplicantInfo}></Route>
           <Route path="/register" component={Register}></Route>
           <Route path="/login" component={Login}></Route>
         </Switch>

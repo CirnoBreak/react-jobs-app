@@ -4,9 +4,8 @@ import { withRouter } from 'dva/router';
 
 /**
  * 权限路由组件
- *
  */
-const AuthRoute = ({ location, dispatch }) => {
+const Authorized = ({ location, dispatch }) => {
   const [isMounted, setIsMounted] = useState(false);
   // 白名单路由
   const whiteList = ['/login', '/register'];
@@ -28,4 +27,4 @@ const AuthRoute = ({ location, dispatch }) => {
   return null;
 };
 
-export default withRouter(connect(null)(AuthRoute));
+export default withRouter(connect(null)(Authorized));

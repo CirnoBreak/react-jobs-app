@@ -5,7 +5,7 @@ import {
   List,
   InputItem,
   WhiteSpace,
-  Button,
+  Button
 } from 'antd-mobile';
 import { connect } from 'dva';
 import { Redirect } from 'dva/router';
