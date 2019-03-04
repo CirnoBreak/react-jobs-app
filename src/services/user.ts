@@ -17,3 +17,9 @@ export function info (): Promise<any> {
   return axios.get('/users/info')
     .catch((err) => { console.log('errrr', err) });
 }
+
+// 完善用户信息
+export function improve (payload): Promise<any> {
+  return axios.patch('/users/improveinfo', payload)
+    .catch((err) => console.log(err));
+}

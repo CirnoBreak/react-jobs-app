@@ -64,23 +64,30 @@ export default {
       const data = yield call(userService.info);
       const { data: { status, data: userData } } = data;
       const token = localStorage.getItem('token');
+      const { type } = userData || { type: '' };
       if (status === 200) {
         // 存储用户信息到state
         yield put({ type: 'SET_USER_INFO', payload: userData });
+        const mainPath = getRedirectPath({ type });
         // 如果登录成功(有token)并且其实浏览器路由为 / 则跳转到相应角色的主界面
         if (token && (pathname === '/')) {
-          const mainPath = getRedirectPath(userData.type).toString();
           yield put(routerRedux.push(mainPath));
         }
-        // 如果登录成功(有token)并且其实浏览器路由为 /login 或者 /register 则跳转到相应角色的主界面
+        // 如果登录成功(有token)并且此时浏览器路由为 /login 或者 /register 则跳转到相应角色的主界面
         if (token && (pathname === '/login' || pathname === '/register')) {
-          const mainPath = getRedirectPath(userData.type).toString();
           yield put(routerRedux.push(mainPath));
         }
       } else {
+        token && localStorage.removeItem('token');
         // 没有登录或者登录失败的时候，跳转到 /login 或者 /register(不匹配register的都跳到/login)
         yield put(routerRedux.push(redirectPath));
       }
+    },
+    // 完善信息逻辑
+    * handleImprove ({ payload }, { call }) {
+      console.log(payload);
+      const data = yield call(userService.improve, payload);
+      console.log(data);
     }
   }
 };

@@ -1,5 +1,10 @@
-const getRedirectPath = ({ type, avatar }): String => {
-  let url: String = (type === 'applicant') ? '/applicant' : '/recruiter';
+interface PathInterface {
+  type: string;
+  avatar?: string;
+}
+
+const getRedirectPath = ({ type, avatar }: PathInterface): string => {
+  let url: string = (type === 'applicant') ? '/applicant' : '/recruiter';
   if (!avatar) {
     url += 'info';
   }

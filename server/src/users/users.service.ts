@@ -23,14 +23,14 @@ export class UsersService {
     return await createdUser.save();
   }
 
-  public generateJWT (user) {
-    let today = new Date();
-    let exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
+  async findOneAndUpdate (id: Object, createUserDto: CreateUserDto): Promise<User> {
+    return await this.userModel.findOneAndUpdate(id, createUserDto);
+  }
 
+  public generateJWT (user) {
     return jwt.sign({
-      user: user.user,
-      exp: exp.getTime() / 1000
+      _id: user._id,
+      exp: Math.floor(Date.now() / 1000) + (60 * 60)
     }, SECRET)
   }
 }

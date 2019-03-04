@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body, Response, HttpStatus, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Response,
+  HttpStatus,
+  Patch } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -15,14 +22,14 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('/info')
-  async getInfo (@User('user') user: string, @Response() response) {
-    if (!user) {
+  async getInfo (@User('_id') _id: string, @Response() response) {
+    console.log(_id);
+    if (!_id) {
       return response
         .json({ msg: '没有权限', status: HttpStatus.UNAUTHORIZED });
     }
-    const info = await this.usersService.findOne({ user }, filter);
+    const info = await this.usersService.findOne({ _id }, filter);
     if (info) {
-      console.log(info)
       return response
         .json({ data: info, status: HttpStatus.OK })
     }
@@ -32,8 +39,9 @@ export class UsersController {
   @Post('/login')
   async login (@Body() loginUserDto: LoginUserDto, @Response() response) {
     const { user, pwd } = loginUserDto;
-    const token = await this.usersService.generateJWT(loginUserDto);
     const res = await this.usersService.findOne({ user, pwd }, filter);
+    console.log(res);
+    const token = await this.usersService.generateJWT(res);
     if (!res) {
       return response
         .status(HttpStatus.BAD_GATEWAY)
@@ -54,7 +62,29 @@ export class UsersController {
     }
     return this.usersService.create(createUserDto)
       .then(() => {
-        response.json({ msg: "注册成功" });
+        response
+          .status(HttpStatus.OK)
+          .json({ msg: "注册成功" });
+      })
+  }
+
+  @Patch('/improveinfo')
+  async updateUser (@User('_id') _id: string, @Body() createUserDto: CreateUserDto, @Response() response): Promise<any> {
+    if (!_id) {
+      return response
+        .status(HttpStatus.BAD_GATEWAY)
+        .json({ msg: "请求失败" });
+    }
+    return this.usersService.findOneAndUpdate(_id, createUserDto)
+      .then((res) => {
+        const { user, type } = res;
+        const data = Object.assign({}, {
+          user,
+          type
+        }, createUserDto);
+        return response
+          .status(HttpStatus.OK)
+          .json({ msg: "完善信息成功", ...data });
       })
   }
 }

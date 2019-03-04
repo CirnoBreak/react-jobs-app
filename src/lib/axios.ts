@@ -8,7 +8,7 @@ instance.interceptors.request.use(
   config => {
     const token = localStorage.getItem('token');
     if (token) {
-      config.headers.common['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiMjMyMSIsImV4cCI6MTU1NjI2MDc3MC4xOCwiaWF0IjoxNTUxMDc2NzcwfQ.aynBz1m6QSB2ZdAbaghnXEAa2L_osjkqiLuMs65zSro';
+      config.headers.common['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },

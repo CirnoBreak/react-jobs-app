@@ -4,7 +4,7 @@ export class CreateUserDto {
   readonly type: string;
   readonly avatar?: string;
   readonly desc?: string;
-  readonly title?: string;
+  readonly position?: string;
   readonly company?: string;
   readonly money?: string;
 }

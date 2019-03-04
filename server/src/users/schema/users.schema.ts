@@ -15,7 +15,7 @@ export const UserSchema = new mongoose.Schema({
   },
   avatar: String,
   desc: String,
-  title: String,
+  position: String,
   company: String,
   money: String
 });

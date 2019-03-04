@@ -8,17 +8,13 @@ import {
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 
-const ApplicantInfo = () => {
-  const [title, setTitle] = useState('');
+const ApplicantInfo = ({ dispatch }) => {
+  const [position, setPosition] = useState('');
   const [desc, setDesc] = useState('');
-  const test = () => {
-    console.log(title, desc);
-  };
   return (
     <>
-      {test()}
       <NavBar mode="dark">完善个人信息</NavBar>
-      <InputItem onChange={(v) => setTitle(v)}>
+      <InputItem onChange={(v) => setPosition(v)}>
         求职职位
       </InputItem>
       <TextareaItem
@@ -29,7 +25,12 @@ const ApplicantInfo = () => {
         count={120}
       >
       </TextareaItem>
-      <Button type="primary">保存</Button>
+      <Button
+        type="primary"
+        onClick={() => dispatch({ type: 'user/handleImprove', payload: { position, desc} })}
+      >
+        保存
+      </Button>
     </>
   );
 };
