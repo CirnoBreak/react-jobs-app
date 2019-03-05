@@ -7,13 +7,24 @@ import {
 } from 'antd-mobile';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
+import Avatar from '../../components/Avatar/Avatar';
 
 const ApplicantInfo = ({ dispatch }) => {
   const [position, setPosition] = useState('');
   const [desc, setDesc] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const handleSubmit = () => {
+    return dispatch({
+      type: 'user/handleImprove',
+      payload: { avatar, position, desc }
+    });
+  };
   return (
     <>
       <NavBar mode="dark">完善个人信息</NavBar>
+      <Avatar
+        changeAvatar={(avatarText) => setAvatar(avatarText)}
+      />
       <InputItem onChange={(v) => setPosition(v)}>
         求职职位
       </InputItem>
@@ -27,7 +38,7 @@ const ApplicantInfo = ({ dispatch }) => {
       </TextareaItem>
       <Button
         type="primary"
-        onClick={() => dispatch({ type: 'user/handleImprove', payload: { position, desc} })}
+        onClick={handleSubmit}
       >
         保存
       </Button>
