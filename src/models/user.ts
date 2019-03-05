@@ -62,7 +62,7 @@ export default {
     // 路由校验逻辑
     * handleAuth ({ payload: { redirectPath, pathname } }, { call, put }) {
       const data = yield call(userService.info);
-      const { data: { status, data: userData } } = data;
+      const { data: { status, data: userData } } = data || { data: { status: 401, data: {} }};
       const token = localStorage.getItem('token');
       const { type } = userData || { type: '' };
       if (status === 200) {
