@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 
@@ -6,7 +6,6 @@ import { withRouter } from 'dva/router';
  * 权限路由组件
  */
 const Authorized = ({ location, dispatch }) => {
-  const [isMounted, setIsMounted] = useState(false);
   // 白名单路由
   const whiteList = ['/login', '/register'];
   const pathname = location.pathname;
@@ -18,11 +17,8 @@ const Authorized = ({ location, dispatch }) => {
    */
   const redirectPath = whiteList.indexOf(pathname) > -1 ? pathname : '/login';
   useEffect(() => {
-    if (!isMounted) {
-      dispatch({ type: 'user/handleAuth', payload: { redirectPath, pathname } });
-      setIsMounted(true);
-    }
-  }, [isMounted]);
+    dispatch({ type: 'user/handleAuth', payload: { redirectPath, pathname } });
+  }, []);
 
   return null;
 };

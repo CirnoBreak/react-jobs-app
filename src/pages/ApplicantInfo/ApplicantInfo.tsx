@@ -3,7 +3,8 @@ import {
   TextareaItem,
   InputItem,
   NavBar,
-  Button
+  Button,
+  Toast
 } from 'antd-mobile';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
@@ -14,10 +15,14 @@ const ApplicantInfo = ({ dispatch }) => {
   const [desc, setDesc] = useState('');
   const [avatar, setAvatar] = useState('');
   const handleSubmit = () => {
-    return dispatch({
-      type: 'user/handleImprove',
-      payload: { avatar, position, desc }
-    });
+    if (!!avatar && !!desc && !!avatar) {
+      return dispatch({
+        type: 'user/handleImprove',
+        payload: { avatar, position, desc }
+      });
+    } else {
+      Toast.fail('信息不能为空', 1);
+    }
   };
   return (
     <>
