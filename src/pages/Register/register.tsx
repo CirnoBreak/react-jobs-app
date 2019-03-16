@@ -27,6 +27,11 @@ const Register = ({ dispatch }: Props) => {
   const redirectAuth = () => {
     return token && <Redirect to="/" />;
   };
+  const handleRegister = () => {
+    dispatch({ type: 'user/handleRegister', payload: { user, pwd, repeatPwd, type }});
+    setPwd('');
+    setRepeatPwd('');
+  };
   return (
     <>
       {redirectAuth()}
@@ -68,11 +73,7 @@ const Register = ({ dispatch }: Props) => {
         <WhiteSpace />
         <Button
           type="primary"
-          onClick={() => {
-            dispatch({ type: 'user/handleRegister', payload: { user, pwd, repeatPwd, type }});
-            setPwd('');
-            setRepeatPwd('');
-          }}>
+          onClick={() => handleRegister()}>
           注册
         </Button>
       </List>

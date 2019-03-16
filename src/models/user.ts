@@ -33,7 +33,7 @@ export default {
         Toast.fail(msg, 1);
       }
 
-      if (user && pwd) {
+      if (!!user && !!pwd) {
         const data = yield call(userService.login, { user, pwd });
         if (data && data.data.status === 200) {
           localStorage.setItem('token', data.data.token);
@@ -55,7 +55,7 @@ export default {
       }
 
       if ((pwd === repeatPwd) && user && pwd && repeatPwd && type) {
-        const data = yield call(userService.register, { user, pwd, repeatPwd, type });
+        const data = yield call(userService.register, { user, pwd, type });
         console.log(data);
       }
     },

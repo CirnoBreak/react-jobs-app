@@ -13,6 +13,7 @@ export const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  salt: String,
   avatar: String,
   desc: String,
   position: String,
