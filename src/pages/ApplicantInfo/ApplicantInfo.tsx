@@ -10,6 +10,9 @@ import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 import Avatar from '../../components/Avatar/Avatar';
 
+/**
+ * 应聘者个人信息
+ */
 const ApplicantInfo = ({ dispatch }) => {
   const [position, setPosition] = useState('');
   const [desc, setDesc] = useState('');

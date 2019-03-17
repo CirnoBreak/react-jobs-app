@@ -12,7 +12,10 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { User } from './users.decorator';
 
 // 查询的时候过滤密码跟__v字段
-const filter = ["pwd", "__v", "salt"];
+const filter ={
+  "pwd": 0,
+  "__v": 0
+};
 
 @Controller('users')
 export class UsersController {

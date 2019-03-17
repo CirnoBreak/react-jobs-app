@@ -18,8 +18,8 @@ interface Props {
 
 /**
  * 登录组件
- * @param Object history history路由相关的
- * @param Function dispatch dva的dispatch方法
+ * @param {Object} history history路由相关的
+ * @param {Function} dispatch dva的dispatch方法
  */
 const Login = ({ history, dispatch, redirectTo }: Props) => {
   // 账号密码的 state

@@ -85,9 +85,9 @@ export class UsersService {
    * @param {Object} obj 原始对象
    * @param {Array} filterKey 要过滤的key
    */
-  public filterKey (obj: Object, filterKey: string[]) {
+  public filterKey (obj: Object, filterKey: Object) {
     let newObj = JSON.parse(JSON.stringify(obj));
-    filterKey.forEach((key) => {
+    Object.keys(filterKey).forEach((key) => {
       delete newObj[key];
     })
     return newObj;
