@@ -53,7 +53,7 @@ export class UsersService {
    * 
    * @param {Object} user 用户信息
    */
-  public generateJWT (user) {
+  public generateJWT (user: CreateUserDto) {
     return jwt.sign({
       _id: user._id,
       exp: Math.floor(Date.now() / 1000) + (60 * 60)
@@ -64,13 +64,10 @@ export class UsersService {
    * 对原密码进行bcrypt加盐加密
    * @param {String} pwd 原密码
    */
-  public cryptPwd (pwd: String) {
+  public cryptPwd (pwd: string) {
     const salt = genSaltSync(2);
     const hashPwd = hashSync(pwd, salt);
-    return {
-      salt,
-      hashPwd
-    };
+    return hashPwd;
   }
 
   /**
@@ -78,7 +75,7 @@ export class UsersService {
    * @param {String} pwd 原密码
    * @param {String} storePwd 数据库对应的密码
    */
-  public comparePwd (pwd: String, storePwd: String) {
+  public comparePwd (pwd: string, storePwd: string) {
     const isPwdCorrect = compareSync(pwd, storePwd);
     return isPwdCorrect;
   }
@@ -88,7 +85,7 @@ export class UsersService {
    * @param {Object} obj 原始对象
    * @param {Array} filterKey 要过滤的key
    */
-  public filterKey (obj: Object, filterKey: any[]) {
+  public filterKey (obj: Object, filterKey: string[]) {
     let newObj = JSON.parse(JSON.stringify(obj));
     filterKey.forEach((key) => {
       delete newObj[key];

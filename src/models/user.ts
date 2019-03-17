@@ -55,8 +55,12 @@ export default {
       }
 
       if ((pwd === repeatPwd) && user && pwd && repeatPwd && type) {
-        const data = yield call(userService.register, { user, pwd, type });
-        console.log(data);
+        const { data: { status }} = yield call(userService.register, { user, pwd, type });
+        if (status === 200) {
+          yield put(routerRedux.push('/login'));
+          Toast.success('注册成功', 1);
+        }
+        Toast.fail('注册失败', 1);
       }
     },
     // 路由校验逻辑

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 
@@ -16,9 +16,14 @@ const Authorized = ({ location, dispatch }) => {
    * 否则默认重定向到 /login
    */
   const redirectPath = whiteList.indexOf(pathname) > -1 ? pathname : '/login';
-  useEffect(() => {
+  // 鉴权
+  const handleAuth = useCallback(() => {
     dispatch({ type: 'user/handleAuth', payload: { redirectPath, pathname } });
-  }, []);
+  }, [dispatch, pathname, redirectPath]);
+  // 每次加载新页面都进行鉴权
+  useEffect(() => {
+    handleAuth();
+  }, [handleAuth]);
 
   return null;
 };
