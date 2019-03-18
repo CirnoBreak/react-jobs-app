@@ -3,7 +3,7 @@ import { NavBar } from 'antd-mobile';
 import { Route } from 'dva/router';
 import Footer from '../../components/Footer/Footer';
 
-const UserCenter = ({ location: { pathname }}) => {
+const UserCenter = ({ location: { pathname }, history}) => {
   useEffect(() => {
     console.log(pathname);
   }, [pathname]);
@@ -40,7 +40,7 @@ const UserCenter = ({ location: { pathname }}) => {
       {
         <Route key={page.path} path={page.path}></Route>
       }
-      <Footer list={navList}></Footer>
+      <Footer list={navList} path={page.path} history={history}></Footer>
     </>
   ) : null;
 };

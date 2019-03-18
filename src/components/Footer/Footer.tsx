@@ -3,7 +3,8 @@ import { TabBar } from 'antd-mobile';
 
 const Item = TabBar.Item;
 
-const Footer = ({ list }) => {
+const Footer = ({ list, path, history }) => {
+  const linkTo = (msg) => history.push(msg);
   return (
     <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
       <TabBar tabBarPosition="bottom">
@@ -15,6 +16,8 @@ const Footer = ({ list }) => {
                 title={item.title}
                 icon={{ uri: require(`./img/${item.icon}.svg`) }}
                 selectedIcon={{ uri: require(`./img/${item.icon}-active.svg`) }}
+                selected={path === item.path}
+                onPress={() => linkTo(item.path)}
               >
               </Item>
             );
