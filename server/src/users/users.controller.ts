@@ -96,7 +96,7 @@ export class UsersController {
       return response
         .json({ msg: "请求失败" });
     }
-    return this.usersService.findOneAndUpdate(_id, createUserDto)
+    return this.usersService.findOneAndUpdate({ _id }, createUserDto)
       .then((res) => {
         const { user, type } = res;
         const data = Object.assign({}, {

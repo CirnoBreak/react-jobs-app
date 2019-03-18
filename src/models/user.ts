@@ -90,8 +90,11 @@ export default {
     },
     // 完善信息逻辑
     * handleImprove ({ payload }, { call, put }) {
+      console.log(payload);
       const { data: { user, type, avatar } } = yield call(userService.improve, payload);
+      console.log(user, type, avatar);
       if (user) {
+        console.log(getRedirectPath({ type, avatar }));
         yield put(routerRedux.push(getRedirectPath({ type, avatar })));
       }
     }
