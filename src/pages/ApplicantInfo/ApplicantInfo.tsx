@@ -16,25 +16,33 @@ import Avatar from '../../components/Avatar/Avatar';
 const ApplicantInfo = ({ dispatch }) => {
   const [position, setPosition] = useState('');
   const [desc, setDesc] = useState('');
+  const [money, setMoney] = useState('');
   const [avatar, setAvatar] = useState('');
   const handleSubmit = () => {
-    if (!!avatar && !!desc && !!avatar) {
+    if (!!avatar && !!desc && !!avatar && !!money) {
       return dispatch({
         type: 'user/handleImprove',
-        payload: { avatar, position, desc }
+        payload: { avatar, position, desc, money }
       });
+    } else if (!avatar) {
+      Toast.fail('请选择头像', 1);
     } else {
-      Toast.fail('信息不能为空', 1);
+      Toast.fail('请检查信息填写', 1);
     }
   };
   return (
     <>
-      <NavBar mode="dark">完善个人信息</NavBar>
+      <NavBar mode="dark">完善信息</NavBar>
       <Avatar
         changeAvatar={(avatarText) => setAvatar(avatarText)}
       />
       <InputItem onChange={(v) => setPosition(v)}>
         求职职位
+      </InputItem>
+      <InputItem
+        onChange={(v) => setMoney(v)}
+      >
+        期望薪资
       </InputItem>
       <TextareaItem
         onChange={(v) => setDesc(v)}

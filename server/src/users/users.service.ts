@@ -23,9 +23,18 @@ export class UsersService {
   }
 
   /**
+   * 寻找符合条件的用户
+   * @param {Object} opt 查询条件
+   * @param {Object} filter 查询结果要过滤的字段
+   */
+  async find (opt: Object, filter: Object = {}): Promise<User[]> {
+    return await this.userModel.find(opt, filter).exec();
+  }
+
+  /**
    * 寻找单个用户的信息
    * @param {Object} opt 查询单个用户的选项
-   * @param {Object} filter 查询过程要过滤的字段
+   * @param {Object} filter 查询结果要过滤的字段
    */
   async findOne (opt: Object, filter: Object = {}): Promise<User | null> {
     return await this.userModel.findOne(opt, filter).exec();

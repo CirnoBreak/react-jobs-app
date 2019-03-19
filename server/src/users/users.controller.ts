@@ -5,11 +5,14 @@ import {
   Body,
   Response,
   HttpStatus,
-  Patch } from '@nestjs/common';
+  Patch,
+  Param
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { User } from './users.decorator';
+import { instanceOf } from 'prop-types';
 
 // 查询的时候过滤密码跟__v字段
 const filter ={
@@ -106,5 +109,12 @@ export class UsersController {
         return response
           .json({ msg: "完善信息成功", ...data });
       })
+  }
+
+  @Get('/userList/:type')
+  async getUserList (@Param('type') type, @Response() response): Promise<any> {
+    const list = await this.usersService.find({ type }, filter);
+    return response
+      .json({ data: list, status: HttpStatus.OK})
   }
 }

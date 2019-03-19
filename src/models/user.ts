@@ -21,12 +21,13 @@ export default {
     },
     // 登录/注册成功后跳转
     AUTH_SUCCESS (state, { payload }) {
+      console.log('pppppayload', payload);
       state.redirectTo = getRedirectPath(payload);
     }
   },
   effects: {
     // 登录逻辑
-    * handleLogin ({ payload: { user, pwd } }, { call, put, select }) {
+    * handleLogin ({ payload: { user, pwd } }, { call, put }) {
       let msg: string = '';
       if (!user || !pwd) {
         msg = '用户名或者密码不能为空';
@@ -36,8 +37,9 @@ export default {
       if (!!user && !!pwd) {
         const data = yield call(userService.login, { user, pwd });
         if (data && data.data.status === 200) {
+          Toast.success('登陆成功', 1);
           localStorage.setItem('token', data.data.token);
-          yield put({ type: 'AUTH_SUCCESS', payload: { type: data.data.data.type } });
+          yield put({ type: 'AUTH_SUCCESS', payload: { type: data.data.data.type, avatar: data.data.data.avatar || null } });
         }
       }
     },
@@ -81,6 +83,7 @@ export default {
         if (token && (pathname === '/login' || pathname === '/register')) {
           yield put(routerRedux.push(mainPath));
         }
+        console.log('teste');
         // yield put(routerRedux.push(mainPath));
       } else {
         token && localStorage.removeItem('token');

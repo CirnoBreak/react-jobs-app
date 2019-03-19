@@ -14,20 +14,23 @@ const RecruiterInfoInfo = ({ dispatch }) => {
   const [position, setPosition] = useState('');
   const [company, setCompany] = useState('');
   const [desc, setDesc] = useState('');
+  const [money, setMoney] = useState('');
   const [avatar, setAvatar] = useState('');
   const handleSubmit = () => {
-    if (!!avatar && !!position && !!desc && !!company) {
+    if (!!avatar && !!position && !!desc && !!company && !!money) {
       return dispatch({
         type: 'user/handleImprove',
-        payload: { avatar, position, desc, company }
+        payload: { avatar, position, desc, company, money }
       });
+    } else if (!avatar) {
+      Toast.fail('请选择头像', 1);
     } else {
-      Toast.fail('信息不能为空', 1);
+      Toast.fail('请检查信息填写', 1);
     }
   };
   return (
     <>
-      <NavBar mode="dark">完善个人信息</NavBar>
+      <NavBar mode="dark">完善信息</NavBar>
       <Avatar
         changeAvatar={(avatarText) => setAvatar(avatarText)}
       />
@@ -41,11 +44,16 @@ const RecruiterInfoInfo = ({ dispatch }) => {
       >
         公司名称
       </InputItem>
+      <InputItem
+        onChange={(v) => setMoney(v)}
+      >
+        职位薪资
+      </InputItem>
       <TextareaItem
         onChange={(v) => setDesc(v)}
         rows={3}
         autoHeight
-        title="个人简介"
+        title="职位要求"
         count={120}
       >
       </TextareaItem>
