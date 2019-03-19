@@ -81,7 +81,7 @@ export default {
         if (token && (pathname === '/login' || pathname === '/register')) {
           yield put(routerRedux.push(mainPath));
         }
-        yield put(routerRedux.push(mainPath));
+        // yield put(routerRedux.push(mainPath));
       } else {
         token && localStorage.removeItem('token');
         // 没有登录或者登录失败的时候，跳转到 /login 或者 /register(不匹配register的都跳到/login)
