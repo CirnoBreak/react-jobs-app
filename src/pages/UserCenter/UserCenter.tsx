@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { NavBar } from 'antd-mobile';
 import { Route } from 'dva/router';
 import { connect } from 'dva';
@@ -46,13 +46,11 @@ const UserCenter = ({ location: { pathname }, history, type }) => {
   ];
   const page = navList.find((item) => item.path === pathname);
   return page ? (
-    <>
+    <Fragment>
       <NavBar mode="dark">{page.title}</NavBar>
-      {
-        <Route key={page.path} path={page.path} component={page.component}></Route>
-      }
+      <Route key={page.path} path={page.path} component={page.component} />
       <Footer list={navList} path={page.path} history={history}></Footer>
-    </>
+    </Fragment>
   ) : null;
 };
 

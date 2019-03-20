@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { History } from 'history';
 import {
   WingBlank,
@@ -50,7 +50,7 @@ const Login = ({ history, dispatch, redirectTo }: Props) => {
     return null;
   };
   return (
-    <>
+    <Fragment>
       {redirectAuth()}
       <WingBlank>
         <List>
@@ -85,7 +85,7 @@ const Login = ({ history, dispatch, redirectTo }: Props) => {
           注册
         </Button>
       </WingBlank>
-    </>
+    </Fragment>
   );
 };
 

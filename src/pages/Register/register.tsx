@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   InputItem,
   List,
@@ -33,7 +33,7 @@ const Register = ({ dispatch }: Props) => {
     setRepeatPwd('');
   };
   return (
-    <>
+    <Fragment>
       {redirectAuth()}
       <List>
         <InputItem
@@ -77,7 +77,7 @@ const Register = ({ dispatch }: Props) => {
           注册
         </Button>
       </List>
-    </>
+    </Fragment>
   );
 };
 

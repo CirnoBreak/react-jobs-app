@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   TextareaItem,
   InputItem,
@@ -31,7 +31,7 @@ const ApplicantInfo = ({ dispatch }) => {
     }
   };
   return (
-    <>
+    <Fragment>
       <NavBar mode="dark">完善信息</NavBar>
       <Avatar
         changeAvatar={(avatarText) => setAvatar(avatarText)}
@@ -58,7 +58,7 @@ const ApplicantInfo = ({ dispatch }) => {
       >
         保存
       </Button>
-    </>
+    </Fragment>
   );
 };
 

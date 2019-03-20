@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Grid,
   List
@@ -14,13 +14,13 @@ const Avatar = ({ changeAvatar }) => {
     }));
   const [icon, setIcon] = useState('');
   const isSelectAvatar = () => (
-    <div>
+    <Fragment>
       <span>已经选择的头像 </span>
       <img
         style={{ width: 20 }}
         src={icon}
       />
-    </div>
+    </Fragment>
   );
   const notSelectAvatar = () => (
     <div>请选择头像</div>

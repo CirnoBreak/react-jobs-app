@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { WhiteSpace, Card } from 'antd-mobile';
 import QueueAnim from 'rc-queue-anim';
 
@@ -6,14 +6,16 @@ const { Header, Body, Footer } = Card;
 
 const CardList = ({ list }) => {
   return (
-    <>
+    <Fragment>
       <QueueAnim>
         {
           list.map((item) =>
             (
               <div key={item._id}>
                 <WhiteSpace />
-                <Card>
+                <Card
+                  onClick={() => console.log('sdf')}
+                >
                   <Header
                     title={item.position}
                     thumb={item.avatar && require(`../../img/${item.avatar}.png`)}
@@ -31,7 +33,7 @@ const CardList = ({ list }) => {
           )
         }
       </QueueAnim>
-    </>
+    </Fragment>
   );
 };
 

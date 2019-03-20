@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { Fragment, useEffect, useCallback } from 'react';
 import { connect } from 'dva';
 import CardList from '../CardList/CardList';
 
@@ -13,11 +13,11 @@ const Applicant = ({ dispatch, userList }) => {
   }, [getUserList]);
 
   return (
-    <>
+    <Fragment>
       <CardList
         list={userList}
       />
-    </>
+    </Fragment>
   );
 };
 

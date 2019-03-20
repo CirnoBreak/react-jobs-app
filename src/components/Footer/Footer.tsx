@@ -7,8 +7,10 @@ const Footer = ({ list, path, history }) => {
   const linkTo = (msg) => history.push(msg);
   const bottomList = list.filter((item) => !item.hide);
   return (
-    <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
-      <TabBar tabBarPosition="bottom">
+    <div style={{ position: 'fixed', bottom: 0, width: '100%' }}>
+      <TabBar
+        tabBarPosition={'bottom'}
+      >
         {
           bottomList.map((item) => {
             return (

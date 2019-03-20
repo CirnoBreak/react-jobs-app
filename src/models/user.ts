@@ -30,6 +30,11 @@ export default {
     },
     SET_USER_LIST (state, { payload }) {
       state.userList = payload.list;
+    },
+    LOG_OUT () {
+      return {
+        ...initState
+      };
     }
   },
   effects: {
@@ -90,7 +95,6 @@ export default {
         if (token && (pathname === '/login' || pathname === '/register')) {
           yield put(routerRedux.push(mainPath));
         }
-        console.log('teste');
         // yield put(routerRedux.push(mainPath));
       } else {
         token && localStorage.removeItem('token');
@@ -111,6 +115,12 @@ export default {
       if (status === 200) {
         yield put({ type: 'SET_USER_LIST', payload: { list }});
       }
+    },
+    * handleLogout ({ payload }, { put }) {
+      localStorage.removeItem(payload.type);
+      yield put({ type: 'LOG_OUT' });
+      yield put(routerRedux.push('/login'));
+      Toast.success('成功注销', 1);
     }
   }
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Route,
   routerRedux,
@@ -17,16 +17,16 @@ const { ConnectedRouter } = routerRedux;
 const RouterConfig = ({ history }: { history: History }) => {
   return (
     <ConnectedRouter history={history}>
-      <>
+      <Fragment>
         <Authorized />
         <Switch>
           <Route path="/recruiterinfo" component={RecruiterInfo}></Route>
           <Route path="/applicantinfo" component={ApplicantInfo}></Route>
-          <Route path="/register" component={Register}></Route>
           <Route path="/login" component={Login}></Route>
+          <Route path="/register" component={Register}></Route>
           <Route component={UserCenter}></Route>
         </Switch>
-      </>
+      </Fragment>
     </ConnectedRouter>
   );
 };
