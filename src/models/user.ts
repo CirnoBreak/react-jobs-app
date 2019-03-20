@@ -9,7 +9,8 @@ export default {
     redirectTo: '',
     isLogin: false,
     user: '',
-    type: ''
+    type: '',
+    userList: []
   },
   reducers: {
     // 设置用户信息
@@ -21,8 +22,10 @@ export default {
     },
     // 登录/注册成功后跳转
     AUTH_SUCCESS (state, { payload }) {
-      console.log('pppppayload', payload);
       state.redirectTo = getRedirectPath(payload);
+    },
+    SET_USER_LIST (state, { payload }) {
+      state.userList = payload.list;
     }
   },
   effects: {
@@ -93,12 +96,16 @@ export default {
     },
     // 完善信息逻辑
     * handleImprove ({ payload }, { call, put }) {
-      console.log(payload);
       const { data: { user, type, avatar } } = yield call(userService.improve, payload);
-      console.log(user, type, avatar);
       if (user) {
-        console.log(getRedirectPath({ type, avatar }));
         yield put(routerRedux.push(getRedirectPath({ type, avatar })));
+      }
+    },
+    // 获取应聘者/职位列表逻辑
+    * handleUserList ({ payload }, { call, put }) {
+      const { data: { list, status} } = yield call(userService.userList, payload);
+      if (status === 200) {
+        yield put({ type: 'SET_USER_LIST', payload: { list }});
       }
     }
   }

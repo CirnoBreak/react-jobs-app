@@ -115,6 +115,6 @@ export class UsersController {
   async getUserList (@Param('type') type, @Response() response): Promise<any> {
     const list = await this.usersService.find({ type }, filter);
     return response
-      .json({ data: list, status: HttpStatus.OK})
+      .json({ list, status: HttpStatus.OK})
   }
 }
