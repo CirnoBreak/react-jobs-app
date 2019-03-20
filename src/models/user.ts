@@ -3,14 +3,18 @@ import getRedirectPath from '../lib/utils';
 import { Toast } from 'antd-mobile';
 import { routerRedux } from 'dva/router';
 
+const initState = {
+  redirectTo: '',
+  isLogin: false,
+  username: '',
+  type: '',
+  userList: []
+};
+
 export default {
   namespace: 'user',
   state: {
-    redirectTo: '',
-    isLogin: false,
-    user: '',
-    type: '',
-    userList: []
+    ...initState
   },
   reducers: {
     // 设置用户信息
@@ -30,15 +34,15 @@ export default {
   },
   effects: {
     // 登录逻辑
-    * handleLogin ({ payload: { user, pwd } }, { call, put }) {
+    * handleLogin ({ payload: { username, pwd } }, { call, put }) {
       let msg: string = '';
-      if (!user || !pwd) {
+      if (!username || !pwd) {
         msg = '用户名或者密码不能为空';
         Toast.fail(msg, 1);
       }
 
-      if (!!user && !!pwd) {
-        const data = yield call(userService.login, { user, pwd });
+      if (!!username && !!pwd) {
+        const data = yield call(userService.login, { username, pwd });
         if (data && data.data.status === 200) {
           Toast.success('登陆成功', 1);
           localStorage.setItem('token', data.data.token);
@@ -47,9 +51,9 @@ export default {
       }
     },
     // 注册逻辑
-    * handleRegister ({ payload: { user, pwd, repeatPwd, type } }, { call, put }) {
+    * handleRegister ({ payload: { username, pwd, repeatPwd, type } }, { call, put }) {
       let msg: string = '';
-      if (!user || !pwd) {
+      if (!username || !pwd) {
         msg = '用户名和密码不能为空';
         Toast.fail(msg, 1);
       }
@@ -59,8 +63,8 @@ export default {
         Toast.fail(msg, 1);
       }
 
-      if ((pwd === repeatPwd) && user && pwd && repeatPwd && type) {
-        const { data: { status }} = yield call(userService.register, { user, pwd, type });
+      if ((pwd === repeatPwd) && username && pwd && repeatPwd && type) {
+        const { data: { status }} = yield call(userService.register, { username, pwd, type });
         if (status === 200) {
           yield put(routerRedux.push('/login'));
           Toast.success('注册成功', 1);
@@ -96,8 +100,8 @@ export default {
     },
     // 完善信息逻辑
     * handleImprove ({ payload }, { call, put }) {
-      const { data: { user, type, avatar } } = yield call(userService.improve, payload);
-      if (user) {
+      const { data: { username, type, avatar } } = yield call(userService.improve, payload);
+      if (username) {
         yield put(routerRedux.push(getRedirectPath({ type, avatar })));
       }
     },

@@ -23,7 +23,7 @@ const CardList = ({ list }) => {
                     {item.type === 'applicant' ? '技能: ' : '岗位描述: '} {item.desc}
                   </Body>
                   <Footer
-                    content={<p>{!!item.company && item.company} {item.user}</p>}
+                    content={<p>{!!item.company && item.company} {item.username}</p>}
                   />
                 </Card>
               </div>

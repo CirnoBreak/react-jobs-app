@@ -23,11 +23,11 @@ interface Props {
  */
 const Login = ({ history, dispatch, redirectTo }: Props) => {
   // 账号密码的 state
-  const [user, setUser] = useState('');
+  const [username, setUsername] = useState('');
   const [pwd, setPwd] = useState('');
   // 登录提交
   const submitLogin = () => {
-    dispatch({ type: 'user/handleLogin', payload: { user, pwd } });
+    dispatch({ type: 'user/handleLogin', payload: { username, pwd } });
     // 每次点击提交一次密码
     setPwd('');
   };
@@ -55,7 +55,7 @@ const Login = ({ history, dispatch, redirectTo }: Props) => {
       <WingBlank>
         <List>
           <InputItem
-            onChange={(val) => setUser(val)}
+            onChange={(val) => setUsername(val)}
           >
           用户名
           </InputItem>
@@ -90,7 +90,6 @@ const Login = ({ history, dispatch, redirectTo }: Props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.user);
   return {
     redirectTo: state.user.redirectTo
   };

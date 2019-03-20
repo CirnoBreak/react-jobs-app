@@ -12,7 +12,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { User } from './users.decorator';
-import { instanceOf } from 'prop-types';
 
 // 查询的时候过滤密码跟__v字段
 const filter ={
@@ -47,9 +46,9 @@ export class UsersController {
    */
   @Post('/login')
   async login (@Body() loginUserDto: LoginUserDto, @Response() response) {
-    const { user, pwd } = loginUserDto;
+    const { username, pwd } = loginUserDto;
     // 从数据库获取当前用户的信息
-    const res = await this.usersService.findOne({ user });
+    const res = await this.usersService.findOne({ username });
     // 判断当前密码与bcrypt加密过的密码是否一致
     const isPwdCorrect = this.usersService.comparePwd(pwd, res.pwd);
     // 筛选从后台读取的数据的敏感字段得到新的数据返回给前端
@@ -70,9 +69,9 @@ export class UsersController {
    */
   @Post('/reg')
   async createUser (@Body() createUserDto: CreateUserDto, @Response() response) {
-    const { user, pwd } = createUserDto;
+    const { username, pwd } = createUserDto;
     // 从数据库获取是否存在用户名一致的用户，用于判断用户名是否重复
-    const res = await this.usersService.findOne({ user })
+    const res = await this.usersService.findOne({ username })
     if (res) {
       return response
         .json({ msg: '用户名重复' })
@@ -101,9 +100,9 @@ export class UsersController {
     }
     return this.usersService.findOneAndUpdate({ _id }, createUserDto)
       .then((res) => {
-        const { user, type } = res;
+        const { username, type } = res;
         const data = Object.assign({}, {
-          user,
+          username,
           type
         }, createUserDto);
         return response

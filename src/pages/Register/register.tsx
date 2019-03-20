@@ -18,7 +18,7 @@ interface Props {
  */
 const Register = ({ dispatch }: Props) => {
   const RadioItem = Radio.RadioItem;
-  const [user, setUser] = useState('');
+  const [username, setUsername] = useState('');
   const [pwd, setPwd] = useState('');
   const [repeatPwd, setRepeatPwd] = useState('');
   const [type, setType] = useState('applicant');
@@ -28,7 +28,7 @@ const Register = ({ dispatch }: Props) => {
     return token && <Redirect to="/" />;
   };
   const handleRegister = () => {
-    dispatch({ type: 'user/handleRegister', payload: { user, pwd, repeatPwd, type }});
+    dispatch({ type: 'user/handleRegister', payload: { username, pwd, repeatPwd, type }});
     setPwd('');
     setRepeatPwd('');
   };
@@ -37,7 +37,7 @@ const Register = ({ dispatch }: Props) => {
       {redirectAuth()}
       <List>
         <InputItem
-          onChange={(val) => setUser(val)}
+          onChange={(val) => setUsername(val)}
         >
           用户名
         </InputItem>
