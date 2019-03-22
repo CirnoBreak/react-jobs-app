@@ -14,5 +14,6 @@ export class ChatGateway {
   @SubscribeMessage('sendMsg')
   sendMsg(client: Client, data: any) {
     console.log(client, data);
+    return 'ok';
   }
 }
