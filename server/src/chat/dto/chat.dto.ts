@@ -4,5 +4,5 @@ export class ChatDto {
   readonly to: String;
   readonly read?: Boolean;
   readonly content: String;
-  readonly createTime: Number;
+  readonly createTime?: Number;
 }
