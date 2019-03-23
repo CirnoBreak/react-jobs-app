@@ -57,6 +57,10 @@ export class UsersService {
   async findOneAndUpdate (id: Object, createUserDto: CreateUserDto): Promise<User> {
     return await this.userModel.findOneAndUpdate(id, createUserDto);
   }
+  
+  async findUsers(): Promise<User[]>  {
+    return await this.userModel.find({});
+  }
 
   /**
    * 
@@ -68,6 +72,7 @@ export class UsersService {
       exp: Math.floor(Date.now() / 1000) + (60 * 60)
     }, SECRET)
   }
+
 
   /**
    * 对原密码进行bcrypt加盐加密

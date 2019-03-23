@@ -16,8 +16,11 @@ export class ChatGateway {
 
   @SubscribeMessage('sendMsg')
   async sendMsg(client: Client, data: any) {
-    // const a = await this.chatService.test({ chatId: '1', from: '2', to: '3', content: '4'})
-    // console.log(a);
-    return 'ok';
+    // const result = await this.chatService.saveChatData(data);
+    console.log(data);
+    // return {hehe: true}
+    // if (result) {
+    client.emit('receiveMsg', {asdf: 'sdf'});
+    // }
   }
 }

@@ -8,8 +8,23 @@ import { ChatDto } from './dto/chat.dto';
 export class ChatService {
   constructor(@InjectModel('Chat') private readonly chatModel: Model<Chat>) {}
 
-  async test (data: ChatDto) {
+  async saveChatData (data: ChatDto) {
     const createChat = new this.chatModel(data);
     return await createChat.save();
+  }
+
+  async findUserMsg (_id: string) {
+    const queryCondition = {
+      '$or': [{
+        from: _id
+      }, {
+        to: _id
+      }]
+    };
+    return await this.chatModel.find(queryCondition);
+  }
+
+  async updateRead (opt: Object) {
+    return await this.chatModel.update(opt, { read: true}, { multi: true });
   }
 }

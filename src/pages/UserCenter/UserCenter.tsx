@@ -7,11 +7,16 @@ import Applicant from '../../components/Applicant/Applicant';
 import Recruiter from '../../components/Recruiter/Recruiter';
 import Msg from '../../components/Msg/Msg';
 import Me from '../../components/Me/Me';
+import io from 'socket.io-client';
 
 const UserCenter = ({ location: { pathname }, history, type }) => {
   useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
+    io.socket = io('ws://localhost:3001');
+    io.socket.emit('sendMsg', { test: 'aaa' });
+    io.socket.on('receiveMsg', function (msg) {
+      console.log(msg);
+    });
+  }, []);
   const navList = [
     {
       path: '/recruiter',
