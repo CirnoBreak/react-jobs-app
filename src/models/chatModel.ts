@@ -1,8 +1,12 @@
-import * as userService from '../services/userService';
-// import * as chatService from '../services/chatService';
+import * as chatService from '../services/chatService';
+import io from 'socket.io-client';
+
+io.socket = io();
 
 const initState = {
-  msgList: ''
+  msgList: [],
+  users: {},
+  unread: 0
 };
 
 export default {
@@ -10,10 +14,32 @@ export default {
   state: {
     ...initState
   },
-  effects: {
-    * getMsgList (payload, { call }) {
-      const { data } = yield call(userService.info);
-      console.log(data);
+  reducers: {
+    SET_CHAT_DATA (state, { payload: { msgList, userId, users } }) {
+      state.msgList = msgList;
+      state.users = users;
+      state.unread = msgList.filter((msg) => !msg.read && (msg.to === userId)).length;
+    },
+    SET_RECEIVE_MSG (state, { payload: { msg, userId } }) {
+      const unreadNum = msg.to === userId ? 1 : 0;
+      state.msgList = [...state.msgList, msg];
+      state.unread += unreadNum;
     }
+  },
+  effects: {
+    * getMsgList (payload, { call, select, put }) {
+      const { data: { msgList, status, users } } = yield call(chatService.getMsgList);
+      if (status === 200) {
+        const _id = yield select(state => state.user._id);
+        yield put({ type: 'SET_CHAT_DATA', payload: { msgList, userId: _id, users }});
+      }
+    }
+    // * receiveMsg (payload, { select, put }) {
+    //   const _id = yield select(state => state.user._id);
+    //   io.socket.on('receiveMsg', function (data) {
+    //     console.log(data);
+    //     yield put({ type: 'SET_RECEIVE_MSG', payload: { data, userId: _id }});
+    //   });
+    // }
   }
 };

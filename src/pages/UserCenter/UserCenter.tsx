@@ -7,17 +7,18 @@ import Applicant from '../../components/Applicant/Applicant';
 import Recruiter from '../../components/Recruiter/Recruiter';
 import Msg from '../../components/Msg/Msg';
 import Me from '../../components/Me/Me';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 
-const UserCenter = ({ location: { pathname }, history, type, dispatch }) => {
+const UserCenter = ({ location: { pathname }, history, type, userId, dispatch }) => {
   useEffect(() => {
-    dispatch({ type: 'chat/getMsgList'});
-    // io.socket = io();
-    // io.socket.emit('sendMsg', { test: 'aaa' });
-    // io.socket.on('receiveMsg', function (msg) {
-    //   console.log(msg);
-    // });
-  }, [dispatch]);
+    if (userId) {
+      dispatch({ type: 'chat/getMsgList'});
+      io.socket = io();
+      io.socket.on('receiveMsg', function (msg) {
+        dispatch({ type: 'chat/SET_RECEIVE_MSG', payload: { msg, userId }});
+      });
+    }
+  }, [dispatch, userId]);
   const navList = [
     {
       path: '/recruiter',
@@ -62,7 +63,8 @@ const UserCenter = ({ location: { pathname }, history, type, dispatch }) => {
 
 const mapStateToProps = (state) => {
   return {
-    type: state.user.type
+    type: state.user.type,
+    userId: state.user._id
   };
 };
 

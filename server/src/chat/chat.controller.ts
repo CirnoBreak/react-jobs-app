@@ -16,10 +16,8 @@ export class ChatController {
   constructor(private readonly chatService: ChatService, private readonly usersService: UsersService) {}
 
   @Get('/msgList')
-  async getMsgList (@User('_id') _id: string) {
-    console.log('sldfikj');
+  async getMsgList (@User('_id') _id: string, @Response() response) {
     const usersList = await this.usersService.findUsers();
-    console.log(usersList[0].username, usersList[0]);
     if (usersList) {
       let usersMap = {};
       usersList.map((user) => {
@@ -29,13 +27,13 @@ export class ChatController {
         }
       });
       const msgList = await this.chatService.findUserMsg(_id);
-      // if (msgList) {
-      //   return response
-      //     .json({ msgList, users: usersMap, status: HttpStatus.OK });
-      // }
-      // return response.json({ msg: '错误', status: HttpStatus.BAD_GATEWAY });
+      if (msgList) {
+        return response
+          .json({ msgList, users: usersMap, status: HttpStatus.OK });
+      }
+      return response.json({ msg: '错误', status: HttpStatus.BAD_GATEWAY });
     }
-    // return response.json({ msg: '错误', status: HttpStatus.BAD_GATEWAY });
+    return response.json({ msg: '错误', status: HttpStatus.BAD_GATEWAY });
   }
 
   @Post('/read')
