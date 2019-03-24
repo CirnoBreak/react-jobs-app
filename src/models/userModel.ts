@@ -1,4 +1,4 @@
-import * as userService from '../services/user';
+import * as userService from '../services/userService';
 import getRedirectPath from '../lib/utils';
 import { Toast } from 'antd-mobile';
 import { routerRedux } from 'dva/router';
