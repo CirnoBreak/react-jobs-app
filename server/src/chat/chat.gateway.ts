@@ -21,6 +21,7 @@ export class ChatGateway {
     return this.chatService.saveChatData({ chatId, from , to, content })
       .then((res) => {
         client.emit('receiveMsg', res);
+        client.broadcast.emit('receiveMsg', res);
       });
   }
 }

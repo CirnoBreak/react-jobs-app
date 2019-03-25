@@ -64,6 +64,7 @@ const Chat = ({ history, match, dispatch, users, msgList, userId }) => {
                 <Item
                   extra={<img alt="avatar" src={avatar} />}
                 >
+                  {msg.content}
                 </Item>
               </List>;
           })
