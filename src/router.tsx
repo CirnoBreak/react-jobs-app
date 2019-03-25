@@ -11,6 +11,7 @@ import Authorized from './pages/Authorized';
 import ApplicantInfo from './pages/ApplicantInfo/ApplicantInfo';
 import RecruiterInfo from './pages/RecruiterInfo/RecruiterInfo';
 import UserCenter from './pages/UserCenter/UserCenter';
+import Chat from './pages/Chat/Chat';
 
 const { ConnectedRouter } = routerRedux;
 
@@ -24,6 +25,7 @@ const RouterConfig = ({ history }: { history: History }) => {
           <Route path="/applicantinfo" component={ApplicantInfo}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
+          <Route path="/chat/:_id" component={Chat}></Route>
           <Route component={UserCenter}></Route>
         </Switch>
       </Fragment>

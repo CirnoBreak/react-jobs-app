@@ -60,7 +60,7 @@ export class UsersController {
         .json({ msg: '用户名或者密码错误' })
     }
     return response
-        .json({ msg: '登陆成功', token, data, status: HttpStatus.OK })
+      .json({ msg: '登陆成功', token, data, status: HttpStatus.OK })
   }
 
   /**

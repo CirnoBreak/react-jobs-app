@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
 import { WhiteSpace, Card } from 'antd-mobile';
+import { withRouter } from 'dva/router';
 import QueueAnim from 'rc-queue-anim';
 
 const { Header, Body, Footer } = Card;
 
-const CardList = ({ list }) => {
+const CardList = (props) => {
+  const { list, history } = props;
   return (
     <Fragment>
       <QueueAnim>
@@ -14,7 +16,7 @@ const CardList = ({ list }) => {
               <div key={item._id}>
                 <WhiteSpace />
                 <Card
-                  onClick={() => console.log('sdf')}
+                  onClick={() => history.push(`/chat/${item._id}`)}
                 >
                   <Header
                     title={item.position}
@@ -37,4 +39,4 @@ const CardList = ({ list }) => {
   );
 };
 
-export default CardList;
+export default withRouter(CardList);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Toast } from 'antd-mobile';
+// import { Toast } from 'antd-mobile';
 
 const instance = axios.create({
   timeout: 20000
@@ -7,7 +7,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    Toast.loading('Loading...');
+    // Toast.loading('Loading...');
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.common['Authorization'] = `Bearer ${token}`;
@@ -21,7 +21,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (config) => {
-    Toast.hide();
+    // Toast.hide();
     return config;
   }
 );

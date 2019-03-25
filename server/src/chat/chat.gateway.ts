@@ -16,11 +16,11 @@ export class ChatGateway {
 
   @SubscribeMessage('sendMsg')
   async sendMsg(client: Client, data: any) {
-    // const result = await this.chatService.saveChatData(data);
-    console.log(data);
-    // return {hehe: true}
-    // if (result) {
-    client.emit('receiveMsg', {asdf: 'sdf'});
-    // }
+    const { from, to, content } = data;
+    const chatId = [from, to].sort().join('_');
+    return this.chatService.saveChatData({ chatId, from , to, content })
+      .then((res) => {
+        client.emit('receiveMsg', res);
+      });
   }
 }

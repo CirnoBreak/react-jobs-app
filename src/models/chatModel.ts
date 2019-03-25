@@ -1,7 +1,4 @@
 import * as chatService from '../services/chatService';
-import io from 'socket.io-client';
-
-io.socket = io();
 
 const initState = {
   msgList: [],
@@ -34,12 +31,5 @@ export default {
         yield put({ type: 'SET_CHAT_DATA', payload: { msgList, userId: _id, users }});
       }
     }
-    // * receiveMsg (payload, { select, put }) {
-    //   const _id = yield select(state => state.user._id);
-    //   io.socket.on('receiveMsg', function (data) {
-    //     console.log(data);
-    //     yield put({ type: 'SET_RECEIVE_MSG', payload: { data, userId: _id }});
-    //   });
-    // }
   }
 };

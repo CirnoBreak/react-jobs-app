@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { NavBar } from 'antd-mobile';
 import { Route } from 'dva/router';
 import { connect } from 'dva';
@@ -7,18 +7,20 @@ import Applicant from '../../components/Applicant/Applicant';
 import Recruiter from '../../components/Recruiter/Recruiter';
 import Msg from '../../components/Msg/Msg';
 import Me from '../../components/Me/Me';
-import io from 'socket.io-client';
+import { socket } from '../../lib/socket';
 
 const UserCenter = ({ location: { pathname }, history, type, userId, dispatch }) => {
+  const [once, setOnce] = useState(false);
   useEffect(() => {
-    if (userId) {
+    if (userId && !once) {
+      setOnce(true);
       dispatch({ type: 'chat/getMsgList'});
-      io.socket = io();
-      io.socket.on('receiveMsg', function (msg) {
+      socket.on('receiveMsg', function (msg) {
+        console.log(msg);
         dispatch({ type: 'chat/SET_RECEIVE_MSG', payload: { msg, userId }});
       });
     }
-  }, [dispatch, userId]);
+  }, [dispatch, userId, once]);
   const navList = [
     {
       path: '/recruiter',

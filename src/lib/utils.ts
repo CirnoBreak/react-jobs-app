@@ -3,7 +3,7 @@ interface PathInterface {
   avatar?: string;
 }
 
-const getRedirectPath = ({ type, avatar }: PathInterface): string => {
+export const getRedirectPath = ({ type, avatar }: PathInterface): string => {
   let url: string = (type === 'applicant') ? '/applicant' : '/recruiter';
   if (!avatar) {
     url += 'info';
@@ -11,4 +11,6 @@ const getRedirectPath = ({ type, avatar }: PathInterface): string => {
   return url;
 };
 
-export default getRedirectPath;
+export const getChatId = (userId, targetId) => {
+  return [userId, targetId].sort().join('_');
+};

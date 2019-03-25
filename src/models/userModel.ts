@@ -1,5 +1,5 @@
 import * as userService from '../services/userService';
-import getRedirectPath from '../lib/utils';
+import { getRedirectPath } from '../lib/utils';
 import { Toast } from 'antd-mobile';
 import { routerRedux } from 'dva/router';
 
@@ -29,7 +29,7 @@ export default {
       state.redirectTo = getRedirectPath(payload);
     },
     SET_USER_LIST (state, { payload }) {
-      state.userList = payload.list;
+      state.userList = payload.list.filter((user) => !!user.avatar);
     },
     LOG_OUT () {
       return {
