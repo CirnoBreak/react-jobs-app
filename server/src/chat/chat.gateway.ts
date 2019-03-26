@@ -15,7 +15,6 @@ export class ChatGateway {
 
   @SubscribeMessage('sendMsg')
   async sendMsg(client: Client, data: any) {
-    console.log(data);
     const { from, to, content } = data;
     const chatId = [from, to].sort().join('_');
     return this.chatService.saveChatData({ chatId, from , to, content })

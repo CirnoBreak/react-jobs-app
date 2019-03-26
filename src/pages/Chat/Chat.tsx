@@ -30,7 +30,6 @@ const Chat = ({ history, match, dispatch, users, msgList, userId }) => {
       dispatch({ type: 'chat/getMsgList'});
       socket.removeAllListeners();
       socket.on('receiveMsg', function (msg) {
-        console.log(msg);
         dispatch({ type: 'chat/SET_RECEIVE_MSG', payload: { msg, userId }});
       });
     }
@@ -45,7 +44,7 @@ const Chat = ({ history, match, dispatch, users, msgList, userId }) => {
         icon={<Icon type="left" />}
         onLeftClick={() => history.goBack()}
       >
-        {users[userId].username || ''}
+        {users[targetUserId].username || ''}
       </NavBar>
       <QueueAnim
         delay={100}
