@@ -15,6 +15,7 @@ const UserCenter = ({ location: { pathname }, history, type, userId, dispatch })
     if (userId && !once) {
       setOnce(true);
       dispatch({ type: 'chat/getMsgList'});
+      socket.removeAllListeners();
       socket.on('receiveMsg', function (msg) {
         console.log(msg);
         dispatch({ type: 'chat/SET_RECEIVE_MSG', payload: { msg, userId }});

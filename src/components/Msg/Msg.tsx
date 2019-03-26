@@ -8,7 +8,6 @@ const Brief = Item.Brief;
 
 const Msg = ({ msgList, userId, users, history }) => {
   if (!msgList.length) {
-    console.log('sdf');
     return null;
   }
   const msgGroup = {};
@@ -19,10 +18,8 @@ const Msg = ({ msgList, userId, users, history }) => {
   });
   const chatList: any[] = Object.values(msgGroup);
   const chatSortedList = chatList.sort((prev, next) => next[next.length - 1].createTime - prev[prev.length - 1].createTime);
-  const test = () => console.log(users);
   return (
     <QueueAnim>
-      {test()}
       {
         chatSortedList.map((chat) => {
           const lastChat = chat[chat.length - 1];
@@ -54,7 +51,7 @@ const Msg = ({ msgList, userId, users, history }) => {
 const mapStateToProps = (state) => {
   return {
     msgList: state.chat.msgList,
-    userId: state.chat.userId,
+    userId: state.user['_id'],
     users: state.chat.users
   };
 };

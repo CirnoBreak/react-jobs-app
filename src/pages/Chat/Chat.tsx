@@ -17,7 +17,9 @@ const Chat = ({ history, match, dispatch, users, msgList, userId }) => {
   const chatId = getChatId(targetUserId, userId);
   const currentChatMsg = msgList.filter((msg) => msg.chatId === chatId);
   const handleSubmit = () => {
-    socket.emit('sendMsg', { from: userId, to: targetUserId, content });
+    socket.emit('sendMsg', { from: userId, to: targetUserId, content }, function (res) {
+      console.log('sdf', res);
+    });
     setContent('');
   };
   const [once, setOnce] = useState(false);
@@ -26,7 +28,7 @@ const Chat = ({ history, match, dispatch, users, msgList, userId }) => {
     if (userId && !once && !isObjNull) {
       setOnce(true);
       dispatch({ type: 'chat/getMsgList'});
-      console.log(users);
+      socket.removeAllListeners();
       socket.on('receiveMsg', function (msg) {
         console.log(msg);
         dispatch({ type: 'chat/SET_RECEIVE_MSG', payload: { msg, userId }});

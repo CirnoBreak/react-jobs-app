@@ -1,8 +1,7 @@
 import {
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
-  WsResponse
+  WebSocketServer
 } from '@nestjs/websockets';
 import { Client, Server } from 'socket.io';
 import { ChatService } from './chat.service';
@@ -16,12 +15,13 @@ export class ChatGateway {
 
   @SubscribeMessage('sendMsg')
   async sendMsg(client: Client, data: any) {
+    console.log(data);
     const { from, to, content } = data;
     const chatId = [from, to].sort().join('_');
     return this.chatService.saveChatData({ chatId, from , to, content })
       .then((res) => {
-        client.emit('receiveMsg', res);
         client.broadcast.emit('receiveMsg', res);
+        client.emit('receiveMsg', res);
       });
   }
 }
