@@ -7,7 +7,7 @@ const Item = List.Item;
 const Brief = Item.Brief;
 
 const Msg = ({ msgList, userId, users, history }) => {
-  if (msgList.length) {
+  if (!msgList.length) {
     console.log('sdf');
     return null;
   }
@@ -36,7 +36,7 @@ const Msg = ({ msgList, userId, users, history }) => {
             >
               <Item
                 extra={<Badge text={unreadNum}></Badge>}
-                thumb={require(`../../img/${users[targetId].avatar}`)}
+                thumb={require(`../../img/${users[targetId].avatar}.png`)}
                 arrow="horizontal"
                 onClick={() => history.push(`/chat/${targetId}`)}
               >
